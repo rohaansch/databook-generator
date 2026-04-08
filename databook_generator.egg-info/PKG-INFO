@@ -1,8 +1,39 @@
-# databook-generator
+Metadata-Version: 2.4
+Name: databook-generator
+Version: 1.0.0
+Summary: Generate PDF databooks from AsciiDoc or Markdown chapters with Jinja2 templating
+Author-email: Rohan Chadhury <rohaanshahid@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/rohaansch/databook-generator
+Project-URL: Documentation, https://github.com/rohaansch/databook-generator#readme
+Project-URL: Issues, https://github.com/rohaansch/databook-generator/issues
+Project-URL: Changelog, https://github.com/rohaansch/databook-generator/blob/main/CHANGELOG.md
+Keywords: asciidoc,markdown,pdf,documentation,databook,jinja2,asciidoctor,technical-writing
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Documentation
+Classifier: Topic :: Text Processing :: Markup
+Classifier: Topic :: Utilities
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: jinja2>=3.1
+Requires-Dist: pyyaml>=6.0
+Provides-Extra: markdown
+Requires-Dist: pypandoc>=1.12; extra == "markdown"
+Provides-Extra: all
+Requires-Dist: pypandoc>=1.12; extra == "all"
+Dynamic: license-file
 
-<p align="center">
-  <img src="assets/logo.svg" alt="Company Logo" width="480"/>
-</p>
+# databook-generator
 
 [![PyPI version](https://img.shields.io/pypi/v/databook-generator)](https://pypi.org/project/databook-generator/)
 [![Python versions](https://img.shields.io/pypi/pyversions/databook-generator)](https://pypi.org/project/databook-generator/)
@@ -406,36 +437,15 @@ This report covers **{{ product_name }}** on the **{{ process_node }}** node.
 
 ## Logo
 
-Place one or more logo files in your `images/` directory. No configuration is needed — detection is automatic. SVG is recommended for crisp rendering at all sizes.
+Place `logo.svg` or `logo.png` in your `images/` directory. The logo will:
 
-### Two-logo mode (recommended)
+- Appear in the **top-right corner of the title page**
+- Appear in the **top-right corner of every page header**
 
-Use separate files optimised for each context:
+No configuration is needed — detection is automatic. SVG logos are recommended for
+crisp rendering at all page sizes.
 
-| File | Where it appears | Recommended size |
-|---|---|---|
-| `main_logo.svg` / `main_logo.png` | Centred on the **title page** at 45% page width | Wide, high-resolution |
-| `header_logo.svg` / `header_logo.png` | Top-right of **every page header** at 22% page width | Horizontal / compact |
-
-### Single-logo mode (fallback)
-
-If dedicated files are not found, `logo.svg` / `logo.png` is used for both roles automatically.
-
-### Priority order
-
-```
-Title page  → main_logo.svg/png   → logo.svg/png
-Header      → header_logo.svg/png → logo.svg/png
-```
-
-### SVG logo templating
-
-Logo SVG files can contain Jinja2 directives just like chapter files. For example, to stamp a version number on the logo:
-
-```xml
-<!-- images/header_logo.svg -->
-<text x="200" y="60">Rev {{ version }}</text>
-```
+Your logo SVG can also use Jinja2 templating if needed (e.g. to stamp a revision or product name on it).
 
 ---
 

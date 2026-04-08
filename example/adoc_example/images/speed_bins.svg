@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="280" viewBox="0 0 560 280">
+  <defs>
+    <style>
+      .bar   { fill: #3A6BC4; opacity: 0.85; }
+      .bar:hover { opacity: 1; }
+      .axis  { stroke: #333; stroke-width: 1.5; fill: none; }
+      .grid  { stroke: #DDD; stroke-width: 1; }
+      .label { font: 12px sans-serif; fill: #333; text-anchor: middle; }
+      .val   { font: bold 11px sans-serif; fill: #1A3A6A; text-anchor: middle; }
+      .title { font: bold 14px sans-serif; fill: #1A3A6A; text-anchor: middle; }
+      .axlabel { font: 12px sans-serif; fill: #555; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="560" height="280" fill="#FAFAFA" rx="8" stroke="#CCC" stroke-width="1"/>
+  <text x="280" y="26" class="title">Speed Bin Distribution</text>
+
+  <!-- Chart area: x=60..530, y=40..220 -->
+  <line x1="60" y1="40"  x2="60"  y2="225" class="axis"/>
+  <line x1="55" y1="220" x2="535" y2="220" class="axis"/>
+
+  <!-- Grid lines -->
+  <line x1="60" y1="220" x2="530" y2="220" class="grid"/>
+  <line x1="60" y1="175" x2="530" y2="175" class="grid"/>
+  <line x1="60" y1="130" x2="530" y2="130" class="grid"/>
+  <line x1="60" y1="85"  x2="530" y2="85"  class="grid"/>
+
+  <!-- Y axis labels (%) -->
+  <text x="50" y="224" class="label" text-anchor="end">0</text>
+  <text x="50" y="179" class="label" text-anchor="end">10</text>
+  <text x="50" y="134" class="label" text-anchor="end">20</text>
+  <text x="50" y="89"  class="label" text-anchor="end">30</text>
+
+  <!-- Bars: each bar=80px wide, gap=14px. 5 bins. Start x=75. -->
+  <!-- Heights in %: Bin1=8%, Bin2=22%, Bin3=30%, Bin4=28%, Bin5=12% -->
+  <!-- px per %: (220-40)/30 = 6px/% -->
+  <!-- Bin 1: 8% → h=48 -->
+  <rect x="75"  y="172" width="80" height="48" class="bar"/>
+  <text x="115" y="168" class="val">8%</text>
+  <text x="115" y="237" class="label">3.8 GHz</text>
+
+  <!-- Bin 2: 22% → h=132 -->
+  <rect x="169" y="88" width="80" height="132" class="bar"/>
+  <text x="209" y="84" class="val">22%</text>
+  <text x="209" y="237" class="label">3.9 GHz</text>
+
+  <!-- Bin 3: 30% → h=180 -->
+  <rect x="263" y="40" width="80" height="180" class="bar"/>
+  <text x="303" y="36" class="val">30%</text>
+  <text x="303" y="237" class="label">4.0 GHz</text>
+
+  <!-- Bin 4: 28% → h=168 -->
+  <rect x="357" y="52" width="80" height="168" class="bar"/>
+  <text x="397" y="48" class="val">28%</text>
+  <text x="397" y="237" class="label">4.1 GHz</text>
+
+  <!-- Bin 5: 12% → h=72 -->
+  <rect x="451" y="148" width="80" height="72" class="bar"/>
+  <text x="491" y="144" class="val">12%</text>
+  <text x="491" y="237" class="label">4.2 GHz</text>
+
+  <!-- Axis labels -->
+  <text x="295" y="258" class="axlabel">Speed Bin (Frequency)</text>
+  <text x="16"  y="135" class="axlabel" transform="rotate(-90,16,135)">% Units</text>
+</svg>

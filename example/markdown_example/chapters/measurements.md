@@ -1,0 +1,60 @@
+## Electrical Measurements
+
+This chapter presents key electrical measurements for **{{ product }}**
+on **{{ process_node }}**.
+
+### Frequency vs. Voltage
+
+![Frequency vs Voltage Curve](freq_vs_voltage.svg)
+
+The chart above shows the frequency scaling behaviour across supply voltage
+for the **{{ product }}** at 25°C.
+
+### Leakage Summary
+
+| Condition | Leakage (mA) |
+|---|---|
+| VDD = 0.75 V, 25°C | 12.3 |
+| VDD = 0.75 V, 85°C | 38.7 |
+| VDD = 0.85 V, 25°C | 19.1 |
+| VDD = 0.85 V, 85°C | 61.4 |
+
+### Speed Bin Distribution
+
+![Speed Bin Distribution](speed_bins.svg)
+
+Speed bins are determined at:
+
+- **VDD nominal** (0.80 V)
+- **Temperature**: 25°C
+- **Test pattern**: SPEC_PERF_V{{ version }}
+
+### Process Variation
+
+The following table summarizes the spread observed across the characterization
+lot for **{{ foundry }}** {{ process_node }}:
+
+| Parameter | Min | Typical | Max | Unit |
+|---|---|---|---|---|
+| Gate length (Lg) | 14.8 | 15.0 | 15.2 | nm |
+| Fin height (Hfin) | 51.5 | 52.0 | 52.5 | nm |
+| Vt (nFET) | 285 | 300 | 315 | mV |
+| Vt (pFET) | -315 | -300 | -285 | mV |
+
+```python
+# Example analysis snippet used to generate these tables
+import pandas as pd
+
+df = pd.read_csv("char_data_{{ product }}_v{{ version }}.csv")
+summary = df.groupby("condition")[["leakage_mA", "freq_GHz"]].describe()
+print(summary)
+```
+
+{% if include_appendix %}
+### Appendix: Raw Data Reference
+
+Raw measurement files are archived at:
+`/archive/{{ product }}/v{{ version }}/measurements/`
+
+Contact [{{ support_email }}](mailto:{{ support_email }}) for access.
+{% endif %}

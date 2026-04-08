@@ -1,0 +1,16 @@
+{
+    "title": "Device Characterization Report",
+    "version": "3.0",
+    "author": "Device Engineering",
+    "date": "April 2026",
+    "product": "XR-9000",
+    "process_node": "5nm FinFET",
+    "foundry": "Example Foundry",
+    "confidentiality": "Company Confidential",
+    "support_email": "device-eng@example.com",
+    "include_appendix": true,
+    "chapters": [
+        "overview",
+        "measurements"
+    ]
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="320" viewBox="0 0 600 320">
+  <defs>
+    <style>
+      .axis  { stroke: #333; stroke-width: 1.5; fill: none; }
+      .grid  { stroke: #DDD; stroke-width: 1; }
+      .line  { stroke: #1A5FA8; stroke-width: 2.5; fill: none; }
+      .point { fill: #1A5FA8; }
+      .label { font: 12px sans-serif; fill: #333; }
+      .title { font: bold 14px sans-serif; fill: #1A3A6A; text-anchor: middle; }
+      .axlabel { font: 12px sans-serif; fill: #555; text-anchor: middle; }
+    </style>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0,8 3,0 6" fill="#333"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="320" fill="#FAFAFA" rx="8" stroke="#CCC" stroke-width="1"/>
+  <text x="300" y="26" class="title">Frequency vs. Supply Voltage — 25°C</text>
+
+  <!-- Chart area: x=70..550, y=50..260 -->
+  <!-- Grid lines (horizontal) -->
+  <line x1="70" y1="260" x2="550" y2="260" class="grid"/>
+  <line x1="70" y1="215" x2="550" y2="215" class="grid"/>
+  <line x1="70" y1="170" x2="550" y2="170" class="grid"/>
+  <line x1="70" y1="125" x2="550" y2="125" class="grid"/>
+  <line x1="70" y1="80"  x2="550" y2="80"  class="grid"/>
+
+  <!-- Y axis -->
+  <line x1="70" y1="50" x2="70" y2="265" class="axis" marker-end="url(#arr)"/>
+  <!-- X axis -->
+  <line x1="65" y1="260" x2="555" y2="260" class="axis" marker-end="url(#arr)"/>
+
+  <!-- Y labels (GHz) -->
+  <text x="60" y="264" class="label" text-anchor="end">2.0</text>
+  <text x="60" y="219" class="label" text-anchor="end">2.5</text>
+  <text x="60" y="174" class="label" text-anchor="end">3.0</text>
+  <text x="60" y="129" class="label" text-anchor="end">3.5</text>
+  <text x="60" y="84"  class="label" text-anchor="end">4.0</text>
+
+  <!-- X labels (V) -->
+  <text x="70"  y="278" class="label" text-anchor="middle">0.70</text>
+  <text x="190" y="278" class="label" text-anchor="middle">0.75</text>
+  <text x="310" y="278" class="label" text-anchor="middle">0.80</text>
+  <text x="430" y="278" class="label" text-anchor="middle">0.85</text>
+  <text x="550" y="278" class="label" text-anchor="middle">0.90</text>
+
+  <!-- Axis labels -->
+  <text x="310" y="300" class="axlabel">Supply Voltage (V)</text>
+  <text x="18"  y="160" class="axlabel" transform="rotate(-90,18,160)">Frequency (GHz)</text>
+
+  <!-- Data line: (0.70→2.1G), (0.75→2.8G), (0.80→3.4G), (0.85→3.9G), (0.90→4.2G) -->
+  <!-- Map: V: 0.70→x=70, 0.90→x=550 (step=120 per 0.05V)  GHz: 2.0→y=260, 4.5→y=50 (step=84/0.5G) -->
+  <!-- 2.1G → y=260-84*0.2=260-16.8≈243; 2.8G → y=260-84*1.6/0.5=... let me use linear map -->
+  <!-- y = 260 - (freq-2.0)*(210/2.5) = 260 - (freq-2.0)*84 -->
+  <!-- 2.1→243, 2.8→193, 3.4→143, 3.9→101, 4.2→76 -->
+  <polyline class="line" points="70,243 190,193 310,143 430,101 550,76"/>
+  <circle cx="70"  cy="243" r="5" class="point"/>
+  <circle cx="190" cy="193" r="5" class="point"/>
+  <circle cx="310" cy="143" r="5" class="point"/>
+  <circle cx="430" cy="101" r="5" class="point"/>
+  <circle cx="550" cy="76"  r="5" class="point"/>
+
+  <!-- Legend -->
+  <line x1="410" y1="48" x2="440" y2="48" class="line"/>
+  <circle cx="425" cy="48" r="4" class="point"/>
+  <text x="445" y="52" class="label">Measured</text>
+</svg>
