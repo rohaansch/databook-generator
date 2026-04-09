@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "databook-generator"
-version = "1.0.1"
+version = "1.0.2"
 description = "Generate PDF databooks from AsciiDoc or Markdown chapters with Jinja2 templating"
 readme = "README.md"
 requires-python = ">=3.10"
