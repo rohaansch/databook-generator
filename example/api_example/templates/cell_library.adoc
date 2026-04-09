@@ -1,0 +1,54 @@
+== Standard Cell Library
+
+This chapter documents the standard cells characterized for *{{ product }}*
+on the *{{ process_node }}* process at *{{ foundry }}*.
+
+All area values are measured in μm² at nominal operating conditions
+(VDD = 0.80 V, 25°C).
+
+[cols="2,2,1,1,1,1", options="header"]
+|===
+| Cell Name | Description | Inputs | Output | Drive Strength | Area (μm²)
+{% for cell in cells %}
+| {{ cell.name }} | {{ cell.description }} | {{ cell.inputs | join(", ") }} | {{ cell.output }} | X{{ cell.drive_strength }} | {{ cell.area_um2 }}
+{% endfor %}
+|===
+
+<<<
+
+{% for cell in cells %}
+=== {{ cell.name }}
+
+*{{ cell.description }}* — drive strength X{{ cell.drive_strength }}.
+
+[cols="1,2", options="header"]
+|===
+| Property | Value
+| Cell Name | {{ cell.name }}
+| Function | {{ cell.function }}
+| Inputs | {{ cell.inputs | join(", ") }}
+| Output | {{ cell.output }}
+| Drive Strength | X{{ cell.drive_strength }}
+| Area | {{ cell.area_um2 }} μm²
+| Leakage @ 25°C | {{ cell.leakage_nw }} nW
+| Input Capacitance | {{ cell.cin_ff }} fF
+|===
+
+==== Schematic
+
+image::{{ cell.schematic }}[{{ cell.name }} schematic, 60%, align="center"]
+
+==== Timing Summary (0.80 V, 25°C)
+
+[cols="1,1,1,1", options="header"]
+|===
+| Arc | Rise (ps) | Fall (ps) | Constraint
+{% for arc in cell.timing %}
+| {{ arc.arc }} | {{ arc.rise_ps }} | {{ arc.fall_ps }} | {{ arc.constraint }}
+{% endfor %}
+|===
+
+{% if not loop.last %}
+<<<
+{% endif %}
+{% endfor %}

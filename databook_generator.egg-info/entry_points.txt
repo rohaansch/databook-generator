@@ -1,2 +1,0 @@
-[console_scripts]
-databook-generator = databook_generator.cli:main

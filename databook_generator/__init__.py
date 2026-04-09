@@ -1,5 +1,6 @@
 """databook-generator: Generate PDF databooks from AsciiDoc or Markdown chapters with Jinja2 templating."""
 
-__version__ = "1.0.0"
-__author__ = "Rohan Chadhury"
-__email__ = "rohaanshahid@gmail.com"
+from databook_generator._version import __version__, __author__, __email__
+from databook_generator.builder import DatabookBuilder
+
+__all__ = ["DatabookBuilder", "__version__", "__author__", "__email__"]

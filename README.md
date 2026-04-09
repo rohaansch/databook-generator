@@ -477,9 +477,104 @@ gem install rouge
 
 ---
 
+## Python API
+
+`DatabookBuilder` lets you drive the entire build from Python code — no CLI, no `config.json` required.
+
+### Basic usage
+
+```python
+from databook_generator import DatabookBuilder
+
+builder = DatabookBuilder(
+    config={
+        "title": "Device Characterization Report",
+        "version": "3.0",
+        "product": "XR-9000",
+        "process_node": "5nm FinFET",
+        "chapters": ["overview", "measurements"],
+    },
+    chapters_dir="chapters",
+    images_dir="images",
+)
+builder.build(output="report.pdf")
+```
+
+You can also pass a path to a JSON file instead of a dict:
+
+```python
+builder = DatabookBuilder(config="config.json", chapters_dir="chapters", images_dir="images")
+```
+
+### Injecting custom chapters
+
+Use `add_chapter()` to insert a dynamically generated chapter at any position.
+The chapter content is a Jinja2 template; you supply the variables at call time.
+
+```python
+builder.add_chapter(
+    template_path="templates",          # directory containing the template
+    template_file="cell_library.adoc",  # .adoc or .md template
+    variables={                         # Jinja2 variables for this chapter only
+        "cells": [
+            {
+                "name": "NAND2_X1",
+                "description": "2-input NAND gate",
+                "inputs": ["A", "B"],
+                "output": "ZN",
+                "area_um2": 0.42,
+            },
+            {
+                "name": "INV_X1",
+                "description": "Inverter",
+                "inputs": ["A"],
+                "output": "ZN",
+                "area_um2": 0.21,
+            },
+        ]
+    },
+    images=[                            # images this chapter needs
+        "templates/images/nand2_schematic.svg",
+        "templates/images/inv_schematic.svg",
+    ],
+    after="overview",                   # insert after the 'overview' chapter
+    name="cell_library",                # logical name for after/before lookups
+)
+
+print(builder.chapter_names)
+# → ['overview', 'cell_library', 'measurements']
+
+builder.build()
+```
+
+#### Positioning options
+
+| Parameter | Behaviour |
+|---|---|
+| `after="chapter_name"` | Insert immediately after the named chapter |
+| `before="chapter_name"` | Insert immediately before the named chapter |
+| `position=N` | Insert at zero-based index N |
+| *(none)* | Append to the end |
+
+`add_chapter()` returns `self`, so calls can be chained.
+
+#### Chapter-local variables
+
+Variables passed to `add_chapter(variables=...)` are **merged over** the global config variables — chapter-level keys override global ones for that chapter's scope only. Global variables are still available in the template.
+
+### Keeping intermediate files
+
+Pass `keep_intermediates=True` to `build()` to retain the rendered `.adoc` files and theme YAML for debugging:
+
+```python
+builder.build(output="report.pdf", keep_intermediates=True)
+```
+
+---
+
 ## Examples
 
-The `example/` directory contains two complete working examples:
+The `example/` directory contains three complete working examples:
 
 ### AsciiDoc example
 
@@ -490,7 +585,7 @@ databook-generator -config config.json
 
 Demonstrates:
 - Jinja2 variable substitution and conditionals in `.adoc`
-- An SVG diagram (`poly_endcap.svg`) with Jinja2 labels rendered at build time
+- SVG diagrams with Jinja2 labels rendered at build time
 - Logo on every page
 
 ### Markdown example
@@ -504,6 +599,36 @@ Demonstrates:
 - Jinja2 variable substitution and conditionals in `.md`
 - GFM tables and code fences
 - Chart SVGs referenced from Markdown
+
+### Python API example
+
+```bash
+cd example/api_example/
+python generate_report.py
+```
+
+Demonstrates the full Python API:
+- `DatabookBuilder` instantiated with a config dict loaded from JSON
+- A custom `Cell Library` chapter generated from a Jinja2 template and a list of cell dicts
+- Cell schematics injected as chapter-local images
+- Chapter inserted between `overview` and `measurements` using `after="overview"`
+
+The example directory layout:
+
+```
+example/api_example/
+├── config.json                      Standard config (overview + measurements)
+├── chapters/                        Standard chapter files
+│   ├── overview.adoc
+│   └── measurements.adoc
+├── images/                          Shared images (logo, charts)
+├── templates/                       Custom chapter templates
+│   ├── cell_library.adoc            Jinja2 template — loops over a list of cells
+│   └── images/                      Cell-specific schematics
+│       ├── nand2_schematic.svg
+│       └── inv_schematic.svg
+└── generate_report.py               Python script using DatabookBuilder
+```
 
 ---
 
