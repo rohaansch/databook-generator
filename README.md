@@ -30,7 +30,7 @@ Define your parameters once in a `config.json` file. Every parameter automatical
 
 ### Python
 
-Python 3.10 or newer.
+Python 3.8 or newer.
 
 ### asciidoctor-pdf (required for all PDFs)
 
