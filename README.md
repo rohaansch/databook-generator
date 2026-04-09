@@ -224,22 +224,19 @@ Optional:
 
 ```json
 {
-    "title": "PDK Extraction Specification",
+    "title": "Specification Document",
     "version": "2.1",
-    "author": "PDK Team",
-    "date": "April 2026",
-    "pdk_name": "p1278",
-    "pdk_revision": "pdk785",
-    "dot_process": "dot3",
-    "support_email": "pdk-support@example.com",
+    "author": "Rohan Chadhury",
+    "date": "April 2024",
+    "support_email": "support@example.com",
     "feature_flags": {
         "include_legacy_notes": false,
-        "include_dvb_section": true
+        "include_new_section": true
     },
     "chapters": [
         "introduction",
-        "poly_endcap",
-        "dvb_proximity"
+        "measurements",
+        "api_example"
     ]
 }
 ```
@@ -265,17 +262,18 @@ Use `{{ variable_name }}` anywhere in your chapter or SVG:
 
 ```
 # In config.json:
-"pdk_name": "p1278",
-"pdk_revision": "pdk785"
+"author": "Rohan Chadhury",
+"date": "April 2026",
+"revision": "Rev1.0"
 
 # In a chapter file (.adoc or .md):
-This document covers the {{ pdk_name }} PDK, revision {{ pdk_revision }}.
+This document covers the Measurements for revision {{ revision }} released on date {{ date }}.
 ```
 
 Renders to:
 
 ```
-This document covers the p1278 PDK, revision pdk785.
+This document covers the Measurements for revision Rev1.0 released on date April 2026
 ```
 
 ### Conditional content
@@ -288,7 +286,7 @@ Use `{% if %}` / `{% else %}` / `{% endif %}` to include or exclude sections:
 
 # chapter.adoc:
 {% if feature_flags.include_legacy_notes %}
-NOTE: This section contains legacy notes for pre-{{ pdk_revision }} users.
+NOTE: This section contains legacy notes for pre-{{ revision }} users.
 ...
 {% endif %}
 ```
@@ -304,10 +302,10 @@ Use `{% for %}` to generate repeated content from a list:
 "layer_stack": ["M1", "M2", "M3", "M4", "M5"]
 
 # chapter.adoc:
-The following metal layers are defined in {{ pdk_name }}:
+The following measurements are defined in {{ revision }}:
 
-{% for layer in layer_stack %}
-* {{ layer }}
+{% for timing in measurements %}
+* {{ timing }}
 {% endfor %}
 ```
 
@@ -330,9 +328,9 @@ SVG files in your `images/` directory are also Jinja2 templates.
 Any SVG containing `{{` or `{%` is rendered before embedding in the PDF.
 
 ```xml
-<!-- images/process_node.svg -->
-<text x="300" y="50">{{ pdk_name }} — {{ dot_process }}</text>
-<text x="300" y="70">Rev: {{ pdk_revision }}</text>
+<!-- images/product_image.svg -->
+<text x="300" y="50">{{ document_name }} — {{ serial_number }}</text>
+<text x="300" y="70">Rev: {{ revision }}</text>
 ```
 
 This is useful for diagram titles, labels, and revision stamps that should always
@@ -356,13 +354,13 @@ callouts, and admonitions. It is the recommended format for complex technical do
 ```asciidoc
 == Introduction
 
-This spec covers *{{ pdk_name }}* revision *{{ pdk_revision }}*.
+This spec covers *{{ document_name }}* revision *{{ revision }}*.
 
 [cols="1,2", options="header"]
 |===
 | Field | Value
-| PDK | {{ pdk_name }}
-| Revision | {{ pdk_revision }}
+| Document Title | {{ document_name }}
+| Revision | {{ revision }}
 |===
 
 [NOTE]
@@ -384,12 +382,12 @@ so the same logo, theme, and footer apply.
 ```markdown
 ## Introduction
 
-This report covers **{{ product_name }}** on the **{{ process_node }}** node.
+This report covers **{{ product_name }}** on the **{{ model_number }}** node.
 
 | Field | Value |
 |---|---|
 | Product | {{ product_name }} |
-| Node | {{ process_node }} |
+| Node | {{ model_number }} |
 
 {% if include_appendix %}
 > See the appendix for raw measurement data.
